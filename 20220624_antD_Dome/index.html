@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./antd.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <div id="root2"></div>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.js"></script>
+  <script src="./js/moment.min.js"></script>
+  <script src="./js/antd.js"></script>
+  <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script type="text/babel">
+    const { Layout, Tabs, Button } = antd
+
+    const { Header, Content, Footer } = Layout
+    const { TabPane } = Tabs
+    const { useRef, useState } = React
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+
+    function App() {
+      // monaco
+      const mona = useRef(null)
+      // echarts
+
+      const [info, setInfo] = useState([
+        {
+          key: '1',
+          title: 'tab1',
+        },
+        {
+          key: '2',
+          title: 'tab2',
+        },
+        {
+          key: '3',
+          title: 'tab3',
+        },
+      ])
+
+      const [activeKey, setActiveKey] = useState('1')
+
+      require.config({ paths: { vs: './node_modules/monaco-editor/min/vs' } })
+      // require(['vs/editor/editor.main'], async function () {
+      //   let ITextModule = monaco.editor.create(mona.current, {
+      //     theme: 'vs', // 主题
+      //     language: 'javascript', // 语言
+      //     automaticLayout: true, // 自适应布局
+      //   })
+      // })
+
+
+
+      const operations = {
+        right: (
+          <React.Fragment>
+            <Button type='primary' size='small'>run</Button>
+            <Button type='primary' size='small'>run2</Button>
+          </React.Fragment>
+        )
+      }
+
+      const style = {
+        width: '100%',
+        minWidth: '700px',
+        minHeight: '400px',
+      }
+
+      const onChange = (key) => {
+        setActiveKey(key)
+        // console.log(key);
+      }
+
+      const onEdit = (key, action) => {
+        action === 'add'
+          ? add()
+          : remove(key)
+      }
+
+      const add = () => {
+        const key = `${Number(info[info.length - 1].key) + 1}`;
+        const newInfo = [...info];
+        newInfo.push({
+          key,
+          title: `Tab${key}`,
+        });
+
+        setInfo(newInfo)
+        setActiveKey(key);
+      }
+
+      const remove = (key) => {
+        let newInfo = info.filter((item, i) => key !== item.key)
+
+        if (newInfo.length > 0) {
+          for (let i = 0; i < newInfo.length; i++) {
+            if (newInfo[i].key === activeKey) {
+              key = activeKey
+              continue
+            }
+          }
+
+          key = newInfo[0].key
+
+          setInfo(newInfo)
+          setActiveKey(key)
+        }
+      }
+
+      return (
+        <React.Fragment>
+          <Tabs type='editable-card' className='123456' tabBarExtraContent={operations} activeKey={activeKey} onChange={onChange} onEdit={onEdit}>
+            {
+              info.map((item) => {
+                return (
+                  <TabPane tab={item.title} key={item.key}>
+
+                    {/* <div ref={mona} style={style}></div> */}
+                    <div>123456</div>
+                  </TabPane>
+                )
+              })
+            }
+          </Tabs>
+          <Tabs defaultActiveKey="2" onChange={onChange}>
+            <TabPane tab="运行结果" key="1">
+              {/* <div ref={mona} style={style}></div> */}
+            </TabPane>
+          </Tabs>
+        </React.Fragment>
+      )
+    }
+
+    root.render(<App />)
+  </script>
+</body>
+
+</html>

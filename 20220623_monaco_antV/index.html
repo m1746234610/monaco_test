@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <button>run</button>
+  <select name="" id="">
+    <option value=""></option>
+    <option value=""></option>
+    <option value=""></option>
+    <option value=""></option>
+  </select>
+  <div style="display: flex;">
+    <div id="root" style="height: 100vh;width: 50%;"></div>
+    <div id="container" style="height: 100vh;width: 50%;background-color: #d9d9d9;"></div>
+  </div>
+
+  <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script type="module"
+    src="./node_modules/_monaco-editor@0.33.0@monaco-editor/esm/vs/basic-languages/mysql/mysql.js"></script>
+
+  <!-- <script src="./node_modules/_monaco-editor@0.33.0@monaco-editor/esm/vs/basic-languages/python/python.js"></script> -->
+
+  <script src="./index.js"></script>
+</body>
+
+</html>
